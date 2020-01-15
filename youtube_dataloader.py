@@ -125,7 +125,8 @@ class Youtube_DataLoader(Dataset):
         dim = 0
         for k in self.feature_path:
             feature_path[k] = os.path.join(self.feature_path[k], vid_path)
-            video[k] = th.load(np.load(feature_path[k])).float()
+            test = np.load(feature_path[k])
+            video[k] = th.from_numpy(test).float()
             output[k] = th.zeros(len(s), video[k].shape[-1])
 
             for i in range(len(s)):
@@ -143,8 +144,9 @@ class Youtube_DataLoader(Dataset):
 
     def __getitem__(self, idx):
         video_id = self.csv['video_id'].values[idx]
-        task = str(self.csv['task'].values[idx])
+        task = str(self.csv['task_id'].values[idx])
         vid_path = self.csv['path'].values[idx]
         text, starts, ends = self._get_text(self.caption[video_id], self.n_pair)
         video = self._get_video(vid_path, starts, ends)
-        return {'video': video, 'text': text, 'video_id': video_id}
+        print("DL SIZES: video, text, strarts", video.size(), text.size(), len(starts))
+        return {'video': video, 'se': [starts, ends], 'text': text, 'video_id': video_id}

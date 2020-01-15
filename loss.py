@@ -36,4 +36,5 @@ class MaxMarginRankingLoss(th.nn.Module):
                      F.relu(self.margin + x - d.view(1, -1))
         if self.negative_weighting and self.n_pair > 1:
             max_margin = max_margin * self.mm_mask
+        print("Lossing", max_margin.size())
         return max_margin.mean()
