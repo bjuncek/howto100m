@@ -1,0 +1,1 @@
+python get_similarity.py --num_thread_reader=8 --epochs=1 --batch_size=32 --n_pair=64 --n_display=100 --embd_dim=4096 --features_path_2D=/checkpoint/bkorbar/HowTo100M/features/antoine_2D --features_path_3D=/checkpoint/bkorbar/HowTo100M/features/antoine_3D --train_csv=data/train.csv
